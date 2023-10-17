@@ -1,0 +1,22 @@
+{
+  "quiz": {
+    "question": "Siapa penemu windows ???",
+    "answer": "Bill Gates",
+    "isValid": false,
+    "winnerList": [
+      "Muna",
+      "Dicky",
+      "Damara",
+      "Dicky"
+    ]
+  },
+  "game": {
+    "Muna": 350,
+    "Dicky": 150,
+    "Mana": 80,
+    "AAA": 10,
+    "IS": 800,
+    "Konsol": 8000,
+    "Damara": 0
+  }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard and Quiz Winners</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-200 p-8">
+    <div class="flex justify-between">
+      <div class="w-1/2 pr-4">
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold">Leaderboard</h2>
+          <div class="table-responsive">
+            <table class="w-full border-collapse border border-gray-600">
+              <thead>
+                <tr class="bg-gray-200">
+                  <th class="border border-gray-600 py-2">Name</th>
+                  <th class="border border-gray-600 py-2">Score</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <!-- Populate the leaderboard data here using JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-semibold">Quiz Winners</h2>
+          <ul id="quizWinners" class="mt-4"></ul>
+        </div>
+      </div>
+
+      <div class="w-1/2">
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold">Chat Menu</h2>
+          <div id="chatMenu" class="p-4 border border-gray-600 bg-white">
+            <!-- Populate the chat menu here using WebSocket data -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // You can use JavaScript to fetch and populate the leaderboard and quiz winner data from the WebSocket server here
+      let leaderboardData = {};
+      let chatMessages = [];
+      const leaderboardTable = document.getElementById("leaderboardBody");
+      const quizWinnersList = document.getElementById("quizWinners");
+      const tableResponsive = document.querySelector(".table-responsive");
+      const chatMenu = document.getElementById("chatMenu"); // Added chat menu element
+      const socket = new WebSocket("ws://127.0.0.1:8181/ws");
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        // Update leaderboard data
+        leaderboardData = data.game;
+
+        // Sort and limit leaderboard data to 5 highest scores
+        const sortedLeaderboard = Object.entries(leaderboardData)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+
+        // Populate leaderboard
+        const leaderboardHTML = sortedLeaderboard
+          .map(
+            ([name, score]) => `
+                    <tr>
+                        <td class="border border-gray-600 py-2 px-4">${name}</td>
+                        <td class="border border-gray-600 py-2 px-4">${score}</td>
+                    </tr>
+                `
+          )
+          .join("");
+        leaderboardTable.innerHTML = leaderboardHTML;
+
+        // Tampilkan atau sembunyikan scrollbar berdasarkan jumlah data
+        if (sortedLeaderboard.length > 5) {
+          tableResponsive.style.overflowY = "auto";
+          tableResponsive.style.maxHeight = "200px";
+        } else {
+          tableResponsive.style.overflowY = "hidden";
+          tableResponsive.style.maxHeight = "none";
+        }
+
+        // Populate quiz winners
+        const quizWinners = data.quiz.winnerList;
+        quizWinnersList.innerHTML =
+          quizWinners.length > 0
+            ? quizWinners.map((winner) => `<li class="mb-2">${winner}</li>`).join("")
+            : "No winners yet";
+
+        // Update chat menu (Assuming the chat menu is an array of items in data)
+        if (data.chat) {
+          // Push new chat messages to the chatMessages array
+          chatMessages = data.chat;
+
+          // Ensure chatMessages array only contains the last 10 messages
+          if (chatMessages.length > 10) {
+            chatMessages.splice(0, chatMessages.length - 10);
+          }
+
+          // Display the last 10 chat messages (excluding undefined messages)
+          chatMenu.innerHTML = chatMessages
+            .filter((chatItem) => chatItem && chatItem.name && chatItem.message) // Filter out undefined messages
+            .map(
+              (chatItem) => `
+                              <div class="mb-2">
+                                <strong>${chatItem.name}:</strong> ${chatItem.message}
+                              </div>
+                            `
+            )
+            .join("");
+        }
+      };
+    </script>
+  </body>
+</html>

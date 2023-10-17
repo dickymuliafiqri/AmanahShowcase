@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snake Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+      #game-board {
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white min-h-screen flex items-center justify-center">
+    <div class="max-w-lg bg-gray-800 p-8 rounded shadow-lg text-center">
+      <h1 class="text-3xl font-extrabold mb-4">Snake Game</h1>
+      <h2 id="name" class="text-lg mb-4">Nama: {{ name }}</h2>
+      <p class="text-lg mb-4">Score: <span id="score" class="font-semibold">0</span></p>
+      <canvas id="game-board" width="300" height="300" class="border"></canvas>
+      <div class="mt-6">
+        <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-4">
+          Start
+        </button>
+      </div>
+    </div>
+    <script src="./static/js/game.js"></script>
+  </body>
+</html>

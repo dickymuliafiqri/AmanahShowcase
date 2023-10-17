@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index Page</title>
+    <!-- Include Tailwind CSS stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-black bg-opacity-100 text-white font-sans">
+    <!-- Glass effect container -->
+    <div class="bg-opacity-20 backdrop-blur-xl bg-gray-400 absolute inset-0"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen">
+      <div class="flex flex-col text-center">
+        <h1 class="text-3xl font-extrabold mb-4">Welcome to the Index Page</h1>
+        <ul class="space-y-6">
+          <li>
+            <a
+              href="{{ url_for('game') }}"
+              class="bg-opacity-60 bg-gray-300 hover:bg-opacity-80 bg-opacity-50 hover:bg-gray-400 text-black text-xl py-3 px-6 rounded-full block w-60 mx-auto transform transition-transform hover:scale-105 duration-300 ease-in-out"
+            >
+              Game
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('portfolio') }}"
+              class="bg-opacity-60 bg-gray-300 hover:bg-opacity-80 bg-opacity-50 hover:bg-gray-400 text-black text-xl py-3 px-6 rounded-full block w-60 mx-auto transform transition-transform hover:scale-105 duration-300 ease-in-out"
+            >
+              Portfolio
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('quiz') }}"
+              class="bg-opacity-60 bg-gray-300 hover:bg-opacity-80 bg-opacity-50 hover:bg-gray-400 text-black text-xl py-3 px-6 rounded-full block w-60 mx-auto transform transition-transform hover:scale-105 duration-300 ease-in-out"
+            >
+              Quiz
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('chat') }}"
+              class="bg-opacity-60 bg-gray-300 hover:bg-opacity-80 bg-opacity-50 hover:bg-gray-400 text-black text-xl py-3 px-6 rounded-full block w-60 mx-auto transform transition-transform hover:scale-105 duration-300 ease-in-out"
+            >
+              Chat
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('logout') }}"
+              class="bg-opacity-60 bg-red-500 hover:bg-opacity-80 bg-opacity-50 hover:bg-gray-400 text-black text-xl py-3 px-6 rounded-full block w-60 mx-auto transform transition-transform hover:scale-105 duration-300 ease-in-out"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
